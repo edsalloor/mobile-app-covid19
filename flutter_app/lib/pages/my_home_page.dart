@@ -50,7 +50,9 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => {print(this.ctrl_image_path.text)},
+        onPressed: () {
+          print(this.ctrl_image_path.text);
+        },
         tooltip: 'Analizar',
         child: Icon(Icons.arrow_forward),
       ), // This trailing comma makes auto-formatting nicer for build methods.
