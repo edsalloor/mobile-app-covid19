@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 
@@ -16,6 +17,10 @@ class MyImageData extends ChangeNotifier{
   void uploadImage(File image) {
     _image = image;
     notifyListeners();
+  }
+
+  int getProb(){
+    return Random().nextInt(100 - 0);
   }
 
   // PARA SIMULAR EL TIEMPO DE ESPERA DEL ANÁLISIS

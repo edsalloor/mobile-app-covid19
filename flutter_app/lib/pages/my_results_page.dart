@@ -29,25 +29,42 @@ class MyResultsPage extends StatelessWidget {
                   size: 20.0,
                 ),
                 imageData.state == ViewState.Busy
-                    ? SpinKitSpinningCircle(
+                    ? SpinKitDoubleBounce(
                         color: Color(0XFF0F7986),
-                        size: 200.0,
+                        size: 250.0,
                       )
-                    : Container(
-                        width: 200.0,
-                        height: 200.0,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Color(0XFF0F7986),
-                        ),
-                        child: Center(
-                          child: MyText(
-                            text: '23%',
-                            color: Colors.white,
-                            size: 100.0,
+                    : Opacity(
+                      opacity: 0.85,
+                      child: Container(
+                          width: 250.0,
+                          height: 250.0,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Color(0XFF0F7986),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.teal[500],
+                                blurRadius: 12.0, // has the effect of softening the shadow
+                                spreadRadius: 1.0, // has the effect of extending the shadow
+                                offset: Offset(
+                                  3.0, // horizontal, move right 10
+                                  5.0, // vertical, move down 10
+                                ),
+                              )
+                            ],
+                          ),
+                          child: Center(
+                            child: MyText(
+                              text: '${imageData.getProb().toString()}%',
+                              color: Colors.white,
+                              size: 100.0,
+                              isBold: true,
+                              hasShadow: true,
+                              fontFamily: 'bodoni',
+                            ),
                           ),
                         ),
-                      ),
+                    ),
                 MyText(
                   text: 'DE PROBABILIDAD DE QUE TENGA COVID-19',
                   color: Colors.white,
