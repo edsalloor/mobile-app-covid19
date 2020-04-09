@@ -44,11 +44,11 @@ class MyResultsPage extends StatelessWidget {
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.teal[500],
-                                blurRadius: 12.0, // has the effect of softening the shadow
-                                spreadRadius: 1.0, // has the effect of extending the shadow
+                                blurRadius: 12.0,
+                                spreadRadius: 1.0,
                                 offset: Offset(
-                                  3.0, // horizontal, move right 10
-                                  5.0, // vertical, move down 10
+                                  3.0,
+                                  5.0,
                                 ),
                               )
                             ],
