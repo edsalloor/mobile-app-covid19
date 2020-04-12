@@ -55,7 +55,7 @@ class MyResultsPage extends StatelessWidget {
                           ),
                           child: Center(
                             child: MyText(
-                              text: '${imageData.getProb().toString()}%',
+                              text: '${imageData.result}%',
                               color: Colors.white,
                               size: 100.0,
                               isBold: true,

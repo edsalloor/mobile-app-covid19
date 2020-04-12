@@ -1,7 +1,9 @@
 import 'dart:io';
 import 'dart:math';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_app/functions/network.dart';
 
 enum ViewState { Idle, Busy }
 
@@ -9,8 +11,12 @@ class MyImageData extends ChangeNotifier{
 
   ViewState _state = ViewState.Busy;
 
+  Api _api = Api();
   File _image;
+  String _result = '';
+
   File get image => _image;
+  String get result => _result;
   ViewState get state => _state;
 
 
@@ -23,10 +29,28 @@ class MyImageData extends ChangeNotifier{
     return Random().nextInt(100 - 0);
   }
 
-  // PARA SIMULAR EL TIEMPO DE ESPERA DEL ANÁLISIS
+
   Future<void> analyzingImage() async {
     setState(ViewState.Busy);
-    await Future.delayed(const Duration(seconds: 5));
+    //await Future.delayed(const Duration(seconds: 5));
+    Map<String, String> data = await convertToBase64();
+
+    Map<String, dynamic> result = await _api.post(data);
+    print('\nThis is the server response');
+    print(result);
+
+    double value = result['predictions'][0][0];
+    print('\nThis is the server response value');
+    print(value);
+
+    print('\nThis is the server response value fixed');
+    double fixedValue = double.parse((value).toStringAsFixed(2));
+    print(fixedValue);
+
+    print('\nThis is what we show to users');
+    _result = double.parse((value).toStringAsFixed(2)).toString();
+    print(_result);
+
     setState(ViewState.Idle);
   }
   
@@ -34,5 +58,14 @@ class MyImageData extends ChangeNotifier{
     _state = viewState;
     notifyListeners();
   }
+
+  Future<Map<String, String>> convertToBase64() async {
+    final bytes = await File(image.path).readAsBytes();
+    final String img64 = base64Encode(bytes);
+    return <String, String>{
+      'b64': img64
+    };
+  }
+
 
 }
