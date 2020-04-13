@@ -3,7 +3,7 @@ import 'dart:math';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_app/functions/network.dart';
+import 'package:flutter_app/functions/api.dart';
 
 enum ViewState { Idle, Busy }
 

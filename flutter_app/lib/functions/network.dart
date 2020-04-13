@@ -1,21 +1,27 @@
-import 'package:dio/dio.dart';
+import 'dart:io';
 
-class Api {
-  factory Api() => _instance;
-  Api.internal();
-  static final Api _instance = Api.internal();
+import 'package:connectivity/connectivity.dart';
 
-  final String _url = 'http://18.217.53.124:5000/imageclassifier/predict/';
+class Network {
 
-  Future<Map<String, dynamic>> post (Map<String, dynamic> data) async {
-    return await Dio().post(_url, data: data)
-        .then((Response response){
-      int status = response.statusCode;
-      if (status < 200 || status > 400) {
-        throw Exception('Post Error with server');
-      }
-      return response.data;
-    });
+  static Future<bool> _checkConnection() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    return (connectivityResult == ConnectivityResult.wifi ||
+        connectivityResult == ConnectivityResult.mobile);
   }
 
+  static Future<bool> checkConnectivity() async {
+    bool isConnected = await _checkConnection();
+    if (isConnected) {
+      try {
+        final result = await InternetAddress.lookup('www.google.com');
+        if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+          return true;
+        }
+      } catch (socketException) {
+        print(socketException);
+      }
+    }
+    return false;
+  }
 }
