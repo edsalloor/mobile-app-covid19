@@ -44,16 +44,16 @@ class MyImageData extends ChangeNotifier{
     print('\nThis is the server response value');
     print(value);
 
-    print('\nThis is the prob value 1 - server response');
-    double probValue = 1 - value;
+    print('\nThis is the prob value 1 - server response x 100');
+    double probValue = (1 - value) * 100;
     print(probValue);
 
     print('\nThis is the server response value fixed');
-    double fixedValue = double.parse((probValue).toStringAsFixed(2));
+    String fixedValue = probValue.toString().substring(0, 5);
     print(fixedValue);
 
     print('\nThis is what we show to users');
-    _result = fixedValue.toString();
+    _result = fixedValue;
     print(_result);
 
     setState(ViewState.Idle);

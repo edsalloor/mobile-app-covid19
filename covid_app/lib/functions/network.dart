@@ -19,7 +19,6 @@ class Network {
           return true;
         }
       } catch (socketException) {
-        print(socketException);
       }
     }
     return false;

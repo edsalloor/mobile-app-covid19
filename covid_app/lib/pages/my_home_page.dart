@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:covidapp/widgets/my_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 import 'package:covidapp/models/image_data.dart';
@@ -9,14 +11,9 @@ import 'package:covidapp/pages/my_image_page.dart';
 import 'package:covidapp/widgets/my_button.dart';
 import 'package:covidapp/widgets/my_image_view.dart';
 
-class MyHomePage extends StatefulWidget {
+class MyHomePage extends StatelessWidget {
   static String id = 'myHomePage';
 
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -40,13 +37,27 @@ class _MyHomePageState extends State<MyHomePage> {
             MyButton(
               title: 'BUSCAR IMAGEN',
               function: () async {
-                File image =
-                await FilePicker.getFile(type: FileType.image);
+                File image;
+                try{
+                  image = await FilePicker.getFile(type: FileType.image);
+                }
+                catch(err){
+                }
+
+                bool storageAccess = await Permission.storage.isGranted;
+                if (!storageAccess) {
+                  Dialogs.myAlertDialog(context: context,
+                      title: 'Sin acceso a Galería',
+                      content: 'Por favor, da acceso a la galería');
+                  return;
+                }
+
                 if (image != null) {
                   Provider.of<MyImageData>(context, listen: false)
                       .uploadImage(image);
                   await Navigator.pushNamed(context, MyImagePage.id);
                 }
+
               },
             ),
           ],

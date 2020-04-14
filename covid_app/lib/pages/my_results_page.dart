@@ -31,13 +31,13 @@ class MyResultsPage extends StatelessWidget {
                     imageData.state == ViewState.Busy
                         ? SpinKitDoubleBounce(
                       color: Color(0XFF0F7986),
-                      size: 250.0,
+                      size: 300.0,
                     )
                         : Opacity(
                       opacity: 0.85,
                       child: Container(
-                        width: 250.0,
-                        height: 250.0,
+                        width: 300.0,
+                        height: 300.0,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: Color(0XFF0F7986),
@@ -57,7 +57,7 @@ class MyResultsPage extends StatelessWidget {
                           child: MyText(
                             text: '${imageData.result}%',
                             color: Colors.white,
-                            size: 100.0,
+                            size: 80.0,
                             isBold: true,
                             hasShadow: true,
                             fontFamily: 'bodoni',

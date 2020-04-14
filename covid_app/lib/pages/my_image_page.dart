@@ -1,3 +1,4 @@
+import 'package:covidapp/widgets/my_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -13,29 +14,6 @@ class MyImagePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    Future<void> _showDialog() async {
-      return showDialog<void>(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Sin Conexión a Internet'),
-            content: Text('Por favor, conéctate a internet.'),
-            elevation: 24.0,
-            actions: <Widget>[
-              FlatButton(
-                child: Text('Listo'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        },
-      );
-    }
-
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -57,7 +35,9 @@ class MyImagePage extends StatelessWidget {
               function: () async {
                 bool connectivity = await Network.checkConnectivity();
                 if (!connectivity) {
-                  _showDialog();
+                  Dialogs.myAlertDialog(context: context,
+                      title: 'Sin Conexión a Internet',
+                      content: 'Por favor, conéctate a internet');
                   return;
                 }
                 Provider.of<MyImageData>(context, listen: false)
